@@ -1,15 +1,15 @@
-import { Container } from "@medusajs/ui"
+import SkeletonButton from "@modules/skeletons/components/skeleton-button"
+import SkeletonCartTotals from "@modules/skeletons/components/skeleton-cart-totals"
 
-const SkeletonProductPreview = () => {
+const SkeletonOrderSummary = () => {
   return (
-    <div className="animate-pulse">
-      <Container className="aspect-[9/16] w-full bg-gray-100 bg-ui-bg-subtle" />
-      <div className="flex justify-between text-base-regular mt-2">
-        <div className="w-2/5 h-6 bg-gray-100"></div>
-        <div className="w-1/5 h-6 bg-gray-100"></div>
+    <div className="grid-cols-1">
+      <SkeletonCartTotals header={false} />
+      <div className="mt-4">
+        <SkeletonButton />
       </div>
     </div>
   )
 }
 
-export default SkeletonProductPreview
+export default SkeletonOrderSummary
