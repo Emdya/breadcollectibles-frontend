@@ -1,43 +1,48 @@
-import { Suspense } from "react"
+"use client"
 
-import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-grid"
-import RefinementList from "@modules/store/components/refinement-list"
-import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+import FilterRadioGroup from "@modules/common/components/filter-radio-group"
 
-import PaginatedProducts from "./paginated-products"
+export type SortOptions = "price_asc" | "price_desc" | "created_at"
 
-const StoreTemplate = ({
+type SortProductsProps = {
+  sortBy: SortOptions
+  setQueryParams: (name: string, value: SortOptions) => void
+  "data-testid"?: string
+}
+
+const sortOptions = [
+  {
+    value: "created_at",
+    label: "Latest Arrivals",
+  },
+  {
+    value: "price_asc",
+    label: "Price: Low -> High",
+  },
+  {
+    value: "price_desc",
+    label: "Price: High -> Low",
+  },
+]
+
+const SortProducts = ({
+  "data-testid": dataTestId,
   sortBy,
-  page,
-  countryCode,
-}: {
-  sortBy?: SortOptions
-  page?: string
-  countryCode: string
-}) => {
-  const pageNumber = page ? parseInt(page) : 1
-  const sort = sortBy || "created_at"
+  setQueryParams,
+}: SortProductsProps) => {
+  const handleChange = (value: SortOptions) => {
+    setQueryParams("sortBy", value)
+  }
 
   return (
-    <div
-      className="flex flex-col small:flex-row small:items-start py-6 content-container"
-      data-testid="category-container"
-    >
-      <RefinementList sortBy={sort} />
-      <div className="w-full">
-        <div className="mb-8 text-2xl-semi">
-          <h1 data-testid="store-page-title">All products</h1>
-        </div>
-        <Suspense fallback={<SkeletonProductGrid />}>
-          <PaginatedProducts
-            sortBy={sort}
-            page={pageNumber}
-            countryCode={countryCode}
-          />
-        </Suspense>
-      </div>
-    </div>
+    <FilterRadioGroup
+      title="Sort by"
+      items={sortOptions}
+      value={sortBy}
+      handleChange={handleChange}
+      data-testid={dataTestId}
+    />
   )
 }
 
-export default StoreTemplate
+export default SortProducts
