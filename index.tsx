@@ -1,23 +1,21 @@
-import repeat from "@lib/util/repeat"
-import SkeletonProductPreview from "@modules/skeletons/components/skeleton-product-preview"
+import SkeletonOrderConfirmedHeader from "@modules/skeletons/components/skeleton-order-confirmed-header"
+import SkeletonOrderInformation from "@modules/skeletons/components/skeleton-order-information"
+import SkeletonOrderItems from "@modules/skeletons/components/skeleton-order-items"
 
-const SkeletonProductGrid = ({
-  numberOfProducts = 8,
-}: {
-  numberOfProducts?: number
-}) => {
+const SkeletonOrderConfirmed = () => {
   return (
-    <ul
-      className="grid grid-cols-2 small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8 flex-1"
-      data-testid="products-list-loader"
-    >
-      {repeat(numberOfProducts).map((index) => (
-        <li key={index}>
-          <SkeletonProductPreview />
-        </li>
-      ))}
-    </ul>
+    <div className="bg-gray-50 py-6 min-h-[calc(100vh-64px)] animate-pulse">
+      <div className="content-container flex justify-center">
+        <div className="max-w-4xl h-full bg-white w-full p-10">
+          <SkeletonOrderConfirmedHeader />
+
+          <SkeletonOrderItems />
+
+          <SkeletonOrderInformation />
+        </div>
+      </div>
+    </div>
   )
 }
 
-export default SkeletonProductGrid
+export default SkeletonOrderConfirmed
